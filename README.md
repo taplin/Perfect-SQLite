@@ -39,7 +39,7 @@ It depends on **Perfect-CRUD** (product `PerfectCRUD`) for the ORM integration l
 
 ## Where this fits in Perfect-Resurrection
 
-This package is real, tested, working code — it is one of the four backend session drivers consumed by **Perfect-Session** (`Perfect-Session/Sources/PerfectSessionSQLite/SQLiteSessionDriver.swift` does `import PerfectSQLite` directly and uses the CRUD integration above). It is **not** currently the active backend in the live `scrubsSite` deployment, which uses MySQL for sessions today — SQLite support here is supported, tested infrastructure staged for use, not a deprecated or unused code path.
+This package is real, tested, working code — it is one of the four backend session drivers consumed by **Perfect-Session** (`Perfect-Session/Sources/PerfectSessionSQLite/SQLiteSessionDriver.swift` does `import PerfectSQLite` directly and uses the CRUD integration above). It is **not** currently the active backend in Perfect-Lasso's development/validation setup (`scrubsSite`), which uses MySQL for sessions today — SQLite support here is supported, tested infrastructure staged for use, not a deprecated or unused code path.
 
 ## Building
 
