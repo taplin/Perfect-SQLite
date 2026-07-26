@@ -5,16 +5,16 @@
         <img src="https://img.shields.io/badge/Swift-6.2-orange.svg?style=flat" alt="Swift 6.2">
     </a>
     <a href="https://developer.apple.com/macos/" target="_blank">
-        <img src="https://img.shields.io/badge/Platforms-macOS%2026%2B-lightgray.svg?style=flat" alt="Platforms macOS 26+">
+        <img src="https://img.shields.io/badge/Platforms-macOS%2012%2B-lightgray.svg?style=flat" alt="Platforms macOS 12+">
     </a>
     <a href="./LICENSE" target="_blank">
         <img src="https://img.shields.io/badge/License-Apache-lightgrey.svg?style=flat" alt="License Apache">
     </a>
 </p>
 
-This project provides a Swift wrapper around the SQLite 3 C library, plus a [Perfect-CRUD](../Perfect-CRUD) database driver built on top of it.
+This project provides a Swift wrapper around the SQLite 3 C library, plus a [Perfect-CRUD](https://github.com/taplin/Perfect-CRUD) database driver built on top of it.
 
-This package is part of the `Perfect-Resurrection` fork, a modernization of the original [PerfectlySoft](https://github.com/PerfectlySoft) Perfect project for Swift 6 / macOS 26. It requires **swift-tools-version 6.2** and builds under full **Swift 6 language mode** (strict concurrency checking on for both the library and test targets). It declares `platforms: [.macOS(.v26)]` — this is a **macOS-only** package today; no Linux (or iOS/tvOS/watchOS) platform is declared in `Package.swift`.
+This package is part of the `Perfect-Resurrection` fork, a modernization of the original [PerfectlySoft](https://github.com/PerfectlySoft) Perfect project for Swift 6 / macOS 12. It requires **swift-tools-version 6.2** and builds under full **Swift 6 language mode** (strict concurrency checking on for both the library and test targets). It declares `platforms: [.macOS(.v12)]` — this is a **macOS-only** package today; no Linux (or iOS/tvOS/watchOS) platform is declared in `Package.swift`.
 
 ## What's in this package
 
@@ -27,11 +27,11 @@ Both `SQLite` and `SQLiteStmt` (and the CRUD delegate classes) are marked `@unch
 
 ## Dependencies
 
-This package has a single dependency, declared as a local SwiftPM path in `Package.swift`:
+This package has a single dependency:
 
 ```swift
 dependencies: [
-    .package(path: "../Perfect-CRUD"),
+    .package(url: "https://github.com/taplin/Perfect-CRUD.git", branch: "main"),
 ],
 ```
 
@@ -43,15 +43,15 @@ This package is real, tested, working code — it is one of the four backend ses
 
 ## Building
 
-Add this project as a local path dependency in your `Package.swift`, matching how sibling packages in this fork consume it:
+Add this project as a dependency in your `Package.swift`, matching how sibling packages in this fork consume it:
 
 ```swift
 dependencies: [
-    .package(path: "../Perfect-SQLite"),
+    .package(url: "https://github.com/taplin/Perfect-SQLite.git", branch: "main"),
 ],
 ```
 
-and add `"PerfectSQLite"` to your target's `dependencies` array. Ensure you have the Swift 6.2 toolchain (or newer) installed and a macOS 26+ SDK, and that `sqlite3` is available (it ships with macOS). If you encounter `sqlite3.h file not found` during `swift build`, verify your active toolchain and SDK are correctly selected.
+and add `"PerfectSQLite"` to your target's `dependencies` array. Ensure you have the Swift 6.2 toolchain (or newer) installed and a macOS 12+ SDK, and that `sqlite3` is available (it ships with macOS). If you encounter `sqlite3.h file not found` during `swift build`, verify your active toolchain and SDK are correctly selected.
 
 ## Usage Example — raw SQLite API
 
