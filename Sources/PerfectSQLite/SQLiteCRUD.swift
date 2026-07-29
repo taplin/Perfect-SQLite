@@ -387,6 +387,13 @@ class SQLiteExeDelegate: SQLExeDelegate, @unchecked Sendable {
 	func next<A>() -> KeyedDecodingContainer<A>? where A : CodingKey {
 		return KeyedDecodingContainer(SQLiteCRUDRowReader<A>(database, stat: statement, columns: columnMap))
 	}
+	func nextDynamicRow() throws -> DynamicRow? {
+		var values: [String: DynamicValue] = [:]
+		for (name, position) in columnMap {
+			values[name] = sqliteDynamicValue(statement, position: position)
+		}
+		return DynamicRow(values)
+	}
 	private func bindOne(position: Int, expr: CRUDExpression) throws {
 		switch expr {
 		case .lazy(let e):
@@ -439,6 +446,19 @@ class SQLiteExeDelegate: SQLExeDelegate, @unchecked Sendable {
 			try statement.bind(position: position, b.map{UInt8(bitPattern: $0)})
 		}
 	}
+}
+
+func sqliteDynamicValue(_ statement: SQLiteStmt, position: Int) -> DynamicValue {
+	if statement.isNull(position: position) {
+		return .null
+	} else if statement.isInteger(position: position) {
+		return .int(statement.columnInt64(position: position))
+	} else if statement.isFloat(position: position) {
+		return .double(statement.columnDouble(position: position))
+	} else if statement.isBlob(position: position) {
+		return .bytes(statement.columnIntBlob(position: position))
+	}
+	return .string(statement.columnText(position: position))
 }
 
 public struct SQLiteDatabaseConfiguration: DatabaseConfigurationProtocol {
